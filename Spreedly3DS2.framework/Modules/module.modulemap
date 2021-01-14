@@ -1,0 +1,11 @@
+framework module Spreedly3DS2 {
+  umbrella header "Spreedly3DS2.h"
+
+  export *
+  module * { export * }
+}
+
+module Spreedly3DS2.Swift {
+    header "Spreedly3DS2-Swift.h"
+    requires objc
+}

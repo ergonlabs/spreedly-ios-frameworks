@@ -1,0 +1,65 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.4 (swiftlang-1103.0.32.9 clang-1103.0.32.53)
+// swift-module-flags: -target arm64-apple-ios13.7 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Spreedly3DS2
+import Foundation
+import SDK3DS
+import Spreedly
+@_exported import Spreedly3DS2
+import Swift
+public enum ThreeDSError : Swift.Error {
+  case invalidInput(message: Swift.String)
+  case protocolError(message: Swift.String)
+  case runtimeError(message: Swift.String)
+  case unknownError(error: Swift.Error)
+}
+@_hasMissingDesignatedInitializers public class ThreeDS {
+  public static func initialize(uiViewController: UIKit.UIViewController, locale: Swift.String = "en_US", test: Swift.Bool = false, theme: Spreedly3DS2.SpreedlyTheme? = nil) throws
+  public static func createTransactionRequest(cardType: Swift.String) throws -> Spreedly3DS2.ThreeDSTransactionRequest
+  @objc deinit
+}
+public protocol ThreeDSTransactionRequestDelegate {
+  func success(status: Swift.String)
+  func cancelled()
+  func timeout()
+  func error(_ error: Spreedly3DS2.ThreeDSError)
+}
+@_hasMissingDesignatedInitializers public class ThreeDSTransactionRequest {
+  public var delegate: Spreedly3DS2.ThreeDSTransactionRequestDelegate?
+  public func serialize() -> Swift.String
+  public func doChallenge(withScaAuthenticationJson auth: Foundation.Data)
+  public func doChallenge(withScaAuthentication auth: [Swift.String : Any])
+  @objc deinit
+}
+extension ThreeDSTransactionRequest : SDK3DS.ChallengeStatusReceiver {
+  public func completed(_ e: SDK3DS.CompletionEvent)
+  public func cancelled()
+  public func timedout()
+  public func protocolError(_ e: SDK3DS.ProtocolErrorEvent)
+  public func runtimeError(_ e: SDK3DS.RuntimeErrorEvent)
+}
+public class SpreedlyTheme {
+  public var buttonCornerRadius: Swift.Int?
+  public var buttonFontName: Swift.String?
+  public var buttonFontSize: Swift.Int?
+  public var buttonPositiveTextColor: Swift.String?
+  public var buttonNeutralTextColor: Swift.String?
+  public var buttonPositiveBackgroundColor: Swift.String?
+  public var buttonNeutralBackgroundColor: Swift.String?
+  public var toolbarColor: Swift.String?
+  public var toolbarTextColor: Swift.String?
+  public var toolbarHeaderText: Swift.String?
+  public var toolbarButtonText: Swift.String?
+  public var textFontName: Swift.String?
+  public var textColor: Swift.String?
+  public var textFontSize: Swift.Int?
+  public var headingTextFontName: Swift.String?
+  public var headingTextColor: Swift.String?
+  public var headingTextFontSize: Swift.Int?
+  public var textBoxBorderWidth: Swift.Int?
+  public var textBoxBorderColor: Swift.String?
+  public var textBoxCornerRadius: Swift.Int?
+  public init()
+  @objc deinit
+}
+extension Dictionary where Key == Swift.String, Value == Any {
+}
